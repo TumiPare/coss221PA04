@@ -1,25 +1,22 @@
 package za.ac.up.cs.cos221;
+import java.awt.Dimension;
 import java.sql.SQLException;
 
 import javax.swing.JPanel;   
 import javax.swing.JTable;   
 import javax.swing.JScrollPane;  
 import javax.swing.JTextField;
+import javax.swing.BoxLayout;
 import javax.swing.JButton; 
 
 public class StaffPanel extends JPanel {
-    String driver = "jdbc:mariadb";
-    String host = "localhost";
-    int port = 3307;
-    String database = "u21452832_sakila";
-    String username = "admin";
-    String password = "luffy";
-    public StaffPanel(){
+    
+    public StaffPanel(Database db){
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         JTextField t1;  
-        t1=new JTextField("Welcome to Javatpoint.");  
+        t1=new JTextField("search...");  
         t1.setBounds(50,100, 200,30);  
         this.add(t1);
-        Database db = new Database(driver,host,port, database,username,password);
         String query = "SELECT first_name, last_name,address,address2,district,city,postal_code, store_id,CONCAT(city,',', country) as Store"
         + " FROM staff"
         + " INNER JOIN address" 
@@ -35,9 +32,5 @@ public class StaffPanel extends JPanel {
         } catch (SQLException e) {
             throw new Error("Error: " + e.getMessage());
         }
-        // JTextArea ta=new JTextArea(200,200);   
-        // this.add(ta); 
     }
-   
-    
 }
