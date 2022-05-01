@@ -2,12 +2,18 @@ package za.ac.up.cs.cos221;
 
 import java.sql.SQLException;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;  
-public class FilmsPanel extends JPanel{
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class FilmsPanel extends JPanel implements ActionListener{
+    private JButton btnForm = new JButton("Add New Data");
+    private Database db;
     public FilmsPanel(Database db){
+        this.db = db;
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         String query = "SELECT "
         +    " `film`.`title` as 'Title',"
@@ -32,5 +38,21 @@ public class FilmsPanel extends JPanel{
         } catch (SQLException e) {
             throw new Error("Error: " + e.getMessage());
         }
+        this.add(btnForm);
+     
+        // btnForm.addActionListener(
+            
+        //     new ActionListener(){
+        //         public void actionPerformed(ActionEvent e) {
+        //             ff.setVisible(true);
+        //         }
+        // });
+
+      
+    }
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==btnForm){
+            (new FilmsForm(db)).setVisible(true);;
+        }    
     }
 }

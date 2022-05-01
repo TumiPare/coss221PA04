@@ -7,7 +7,20 @@
   <groupId>za.ac.up.cs.cos221</groupId>
   <artifactId>prac04</artifactId>
   <version>1.0-SNAPSHOT</version>
-
+  <tags>
+    <tag>
+      <name>upNumber</name>
+      <placement>a</placement>
+      <head></head>
+    </tag>
+  </tags> 
+  <developers>
+    <developer>
+      <name>Tumi Pare</name>
+      <email>u21452832@tuks.co.za</email>
+      <upNumber>u21452832</upNumber>
+    </developer>
+  </developers>
   <name>prac04</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
