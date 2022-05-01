@@ -13,12 +13,17 @@
       <placement>a</placement>
       <head></head>
     </tag>
-  </tags> 
+  </tags>
   <developers>
     <developer>
       <name>Tumi Pare</name>
       <email>u21452832@tuks.co.za</email>
       <upNumber>u21452832</upNumber>
+    </developer>
+    <developer>
+      <name>Gustav Daniel Radloff</name>
+      <email>u21435872@tuks.co.za</email>
+      <upNumber>u21435872</upNumber>
     </developer>
   </developers>
   <name>prac04</name>
