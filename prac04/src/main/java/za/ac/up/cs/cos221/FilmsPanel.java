@@ -3,10 +3,13 @@ package za.ac.up.cs.cos221;
 import java.sql.SQLException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;  
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class FilmsPanel extends JPanel implements ActionListener{
@@ -38,21 +41,14 @@ public class FilmsPanel extends JPanel implements ActionListener{
         } catch (SQLException e) {
             throw new Error("Error: " + e.getMessage());
         }
-        this.add(btnForm);
-     
-        // btnForm.addActionListener(
-            
-        //     new ActionListener(){
-        //         public void actionPerformed(ActionEvent e) {
-        //             ff.setVisible(true);
-        //         }
-        // });
-
-      
+        btnForm.addActionListener(this);
+        this.add(btnForm);  
     }
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btnForm){
-            (new FilmsForm(db)).setVisible(true);;
+            JFrame parentForm = (JFrame) SwingUtilities.getWindowAncestor(this);
+            FilmsForm filmsForm = new FilmsForm(parentForm, db);
+            filmsForm.setVisible(true);
         }    
     }
 }

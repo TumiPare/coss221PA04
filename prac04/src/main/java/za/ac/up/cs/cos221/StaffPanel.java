@@ -33,4 +33,5 @@ public class StaffPanel extends JPanel {
             throw new Error("Error: " + e.getMessage());
         }
     }
+   
 }
