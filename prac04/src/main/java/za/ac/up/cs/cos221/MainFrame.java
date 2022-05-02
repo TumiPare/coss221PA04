@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 public class MainFrame extends JFrame {
     public MainFrame(Database db){
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1000,500);  
         JTabbedPane tabbedPane = new JTabbedPane();
         // tabbedPane.setBounds(50,50,200,200);  
