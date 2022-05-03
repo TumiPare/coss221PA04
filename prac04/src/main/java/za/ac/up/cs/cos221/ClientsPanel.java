@@ -1,6 +1,7 @@
 package za.ac.up.cs.cos221;
 import java.sql.SQLException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,8 +14,10 @@ import java.awt.event.ActionListener;
 public class ClientsPanel extends JPanel implements ActionListener{
     JButton btnAddClient = new JButton("Add new client");
     private Database db;
+    
     public ClientsPanel(Database db){
         this.db = db;
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         String query = "SELECT " 
     +     " CONCAT(city,',', country) as Store,"
     +     " `customer`.`first_name` as 'First Name',"
@@ -24,7 +27,7 @@ public class ClientsPanel extends JPanel implements ActionListener{
     +     " IF(`customer`.`active` = 1, 'YES', 'NO') as 'Active',"
     +     " `customer`.`create_date` as 'Membership Since',"
     +     " `customer`.`last_update` as 'Last Update'"
-    + " FROM `u21452832_sakila`.`customer`"
+    + " FROM `customer`"
     + " INNER JOIN store"
     + " ON customer.store_id = store.store_id"
     + " INNER JOIN address"
@@ -41,13 +44,13 @@ public class ClientsPanel extends JPanel implements ActionListener{
             throw new Error("Error: " + e.getMessage());
         }
         btnAddClient.addActionListener(this);
-
+        this.add(btnAddClient);
     }
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btnAddClient){
             JFrame parentForm = (JFrame) SwingUtilities.getWindowAncestor(this);
-            FilmsForm filmsForm = new FilmsForm(parentForm, db);
-            filmsForm.setVisible(true);
+            AddClientForm acf = new AddClientForm(parentForm, db);
+            acf.setVisible(true);
         }    
     }
     
