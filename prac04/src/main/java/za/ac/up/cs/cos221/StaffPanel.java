@@ -1,5 +1,4 @@
 package za.ac.up.cs.cos221;
-import java.awt.Dimension;
 import java.sql.SQLException;
 
 import javax.swing.JPanel;   
@@ -7,7 +6,7 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;  
 import javax.swing.JTextField;
 import javax.swing.BoxLayout;
-import javax.swing.JButton; 
+
 
 public class StaffPanel extends JPanel {
     
