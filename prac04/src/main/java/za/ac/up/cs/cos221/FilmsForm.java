@@ -192,8 +192,9 @@ public class FilmsForm extends JDialog implements ActionListener {
 	    Double rate, cost;
 	    if (this.iRelease.getText().length() > 0) {
 	      year = Integer.parseInt(this.iRelease.getText());
-	      if (!(year >= 1000 && year <=9999)) {
-		throw new Exception("We don't have a time machine :/ please enter a valid year for a movie release date"); } } else {year = -0;}
+	      if (!(year >= 2000 && year <=2022)) {
+		throw new Exception("We don't have a time machine :/ please enter a valid year for a movie release date"); }
+	    } else {year = -1;}
 	    if (this.iRental.getText().length() > 0) {
 	      duration = Integer.parseInt(this.iRental.getText());
 	    } else {duration = 3;}
@@ -202,7 +203,7 @@ public class FilmsForm extends JDialog implements ActionListener {
 	    } else {rate = 4.99;}
 	    if (this.iLenght.getText().length() > 0) {
 	      length = Integer.parseInt(this.iLenght.getText());
-	    } else {length = -0;}
+	    } else {length = -1;}
 	    if (this.iCost.getText().length() > 0) {
 	      cost = Double.parseDouble(this.iCost.getText());
 	    } else {cost = 19.99;}
@@ -218,7 +219,7 @@ public class FilmsForm extends JDialog implements ActionListener {
 	    extcount = 0;
 	    for (int count = 0; count < this.ifeatures.length; count++) {
 	      if (this.ifeatures[count].isSelected()) {
-		features[extcount] = ifeatures.toString();
+		features[extcount] = ifeatures[count].getText();
 		extcount++;
 	      }
 	    }

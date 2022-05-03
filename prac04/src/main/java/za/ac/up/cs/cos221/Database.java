@@ -28,6 +28,28 @@ public class Database {
                 .toString();
         try{
             connection = DriverManager.getConnection(url, username, password);
+	    String [] tables = {"customer", "film", "address", "language"};
+	    String [] keys = {"customer_id", "film_id", "address_id", "language_id"};
+	    for (int count = 0; count < tables.length; count++) {
+	      int max = 0;
+	      String getmax = "SELECT MAX(?) FROM !";
+	      String alterTable = "ALTER TABLE ? auto_increment=!";
+	      Statement prepare = this.connection.createStatement();
+	      getmax = getmax.replace("?", keys[count]);
+	      getmax = getmax.replace("!", tables[count]);
+	      System.out.println(getmax);
+	      ResultSet res = prepare.executeQuery(getmax);
+	      if (res.next()) {
+		max = res.getInt(1) + 1;
+		System.out.println(max);
+	      }
+	      prepare = this.connection.createStatement();
+	      alterTable = alterTable.replace("?", tables[count]);
+	      alterTable = alterTable.replace("!", Integer.toString(max));
+	      System.out.println(alterTable);
+	      prepare.executeUpdate(alterTable);
+	    }
+
         }
         catch (SQLException e) {
             throw new Error("Error: " + e.getMessage());
@@ -103,17 +125,6 @@ public class Database {
     public boolean insertFilm(String title, String desc, int release,
 	String lang, int duration, Double rate, int length, Double cost,
 	String rating, String originalLang, String[] features) {
-      System.out.println(title);
-      System.out.println(desc);
-      System.out.println(release);
-      System.out.println(lang);
-      System.out.println(duration);
-      System.out.println(rate);
-      System.out.println(length);
-      System.out.println(cost);
-      System.out.println(rating);
-      System.out.println(originalLang);
-      System.out.println(features);
       // This is just capitalizing the language Strings
       lang = lang.substring(0, 1).toUpperCase() + lang.substring(1);
       if (!(originalLang.isEmpty())) {
@@ -124,7 +135,7 @@ public class Database {
       int primaryLanguageID = -1;
       int secondLanguageKey = -1;
       String languageQuery = "SELECT language_id FROM language WHERE name = ?";
-      String insertLanguage = "INSERT INTO langauge (name) VALUES (?)";
+      String insertLanguage = "INSERT INTO language (name) VALUES (?)";
       // this fat mess will add a language if it does not exist and if it does
       // then it will give the key. in the end we get the key either way.
       try {
@@ -197,14 +208,18 @@ public class Database {
 	}
 	prepare.setDouble(9,cost);
 	prepare.setString(10,rating);
-	String newstrarray = "(";
+	String newstrarray = "";
 	for (int count = 0; count < features.length-1; count++) {
 	  newstrarray += features[count] + ",";
 	}
 	if (features.length != 0) {
-	  newstrarray += features[features.length-1] + ")";
+	  newstrarray += features[features.length-1];
 	}
-	prepare.setString(11,newstrarray);
+	if (features.length == 0) {
+	  prepare.setNull(11, Types.NULL);
+	}else {
+	  prepare.setString(11,newstrarray);
+	}
 	prepare.executeUpdate();
       } catch (Exception e) {
 	return false;
