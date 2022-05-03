@@ -1,11 +1,20 @@
 package za.ac.up.cs.cos221;
 import java.sql.SQLException;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;   
-public class ClientsPanel extends JPanel {
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class ClientsPanel extends JPanel implements ActionListener{
+    JButton btnAddClient = new JButton("Add new client");
+    private Database db;
     public ClientsPanel(Database db){
+        this.db = db;
         String query = "SELECT " 
     +     " CONCAT(city,',', country) as Store,"
     +     " `customer`.`first_name` as 'First Name',"
@@ -31,7 +40,15 @@ public class ClientsPanel extends JPanel {
         } catch (SQLException e) {
             throw new Error("Error: " + e.getMessage());
         }
+        btnAddClient.addActionListener(this);
 
+    }
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==btnAddClient){
+            JFrame parentForm = (JFrame) SwingUtilities.getWindowAncestor(this);
+            FilmsForm filmsForm = new FilmsForm(parentForm, db);
+            filmsForm.setVisible(true);
+        }    
     }
     
 }

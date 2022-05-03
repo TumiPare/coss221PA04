@@ -1,4 +1,5 @@
 package za.ac.up.cs.cos221;
+import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -6,6 +7,11 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.ResultSetMetaData;
+
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -76,5 +82,21 @@ public class Database {
             tableModel.addRow(row);
         }
         return tableModel;     
+    }
+    public JPanel createForm(String [] labels){
+        JPanel mainPnl = new JPanel();
+        mainPnl.setLayout(new BoxLayout(mainPnl, BoxLayout.PAGE_AXIS));
+        for (int i = 0; i < labels.length; i++) {
+            JPanel pnlRow = new JPanel();
+            pnlRow.setLayout(new BoxLayout(pnlRow, BoxLayout.LINE_AXIS));
+            JLabel label = new JLabel(labels[i]);
+            JTextField textField = new JTextField(10);
+            label.setPreferredSize(new Dimension(100,30));
+            pnlRow.add(label);
+            pnlRow.add(textField);
+            mainPnl.add(pnlRow);
+            label.setLabelFor(textField);       
+        }
+        return mainPnl;
     }
 }
