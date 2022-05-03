@@ -1,3 +1,5 @@
+// Getting input from the user to add a new item to the database
+// This is called from FilmsPanel.
 package za.ac.up.cs.cos221;
 
 import javax.swing.BoxLayout;
@@ -13,11 +15,11 @@ import javax.swing.JTextField;
 import java.awt.Dimension;
 public class FilmsForm extends JDialog {
     public FilmsForm(JFrame parent,Database db){
-        super(parent,"Enter data",true);    
+        super(parent,"Enter data",true);
         String[] labels = {"Title: ", "Description: ", "Release Year: ", "Language: ",
                             "Rental Duration: ", "Rental Rate: ","Length: ","Cost: ",
                             "Rating: ", "Last Update: "};
-        JPanel mainPnl = db.createForm(labels);                   
+        JPanel mainPnl = db.createForm(labels);
         this.add(mainPnl);
         this.pack();
     }

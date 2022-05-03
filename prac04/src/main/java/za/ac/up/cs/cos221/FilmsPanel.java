@@ -1,3 +1,5 @@
+// calls FilmsForm and shows the films in
+//the database.
 package za.ac.up.cs.cos221;
 
 import java.sql.SQLException;
@@ -30,25 +32,29 @@ public class FilmsPanel extends JPanel implements ActionListener{
         +    " `film`.`rating` as 'Rating',"
         +    " `film`.`special_features` as 'Special Feactures',"
         +    " `film`.`last_update` as 'Last Update'"
-        +" FROM `u21452832_sakila`.`film`"
+        +" FROM `film`"
         +" INNER JOIN "
         +" language "
         +" ON film.language_id = language.language_id;";
         try {
             JTable table = new JTable(db.getTableModel(query));
-            JScrollPane scrollPane = new JScrollPane(table);    
+            JScrollPane scrollPane = new JScrollPane(table);
             this.add(scrollPane);
         } catch (SQLException e) {
             throw new Error("Error: " + e.getMessage());
         }
         btnForm.addActionListener(this);
-        this.add(btnForm);  
+        this.add(btnForm);
     }
+    // handle all the actions in the form
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==btnForm){
+	// if the action is comming from the button.
+        if(e.getSource()==this.btnForm){
+	    // make the FilmsFormVisible and pass in this windows accesstor and
+	    // our database.
             JFrame parentForm = (JFrame) SwingUtilities.getWindowAncestor(this);
             FilmsForm filmsForm = new FilmsForm(parentForm, db);
             filmsForm.setVisible(true);
-        }    
+        }
     }
 }
