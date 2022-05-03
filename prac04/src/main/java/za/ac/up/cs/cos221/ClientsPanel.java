@@ -25,7 +25,7 @@ public class ClientsPanel extends JPanel implements ActionListener, MouseListene
     private Database db;
     private JTable table;
     private JMenuItem menuEdit = new JMenuItem("Edit Client Details");
-    private JMenuItem menuDelete = new JMenuItem("Delete");
+    private JMenuItem menuDelete = new JMenuItem("Delete Client");
     JPopupMenu rightClickMenu = new JPopupMenu();
     public ClientsPanel(Database db){
         this.db = db;
@@ -76,8 +76,12 @@ public class ClientsPanel extends JPanel implements ActionListener, MouseListene
             acf.setVisible(true);
         }    
         else if(e.getSource()==menuDelete){
+           
         }
         else if(e.getSource()==menuEdit){
+            JFrame parentForm = (JFrame) SwingUtilities.getWindowAncestor(this);
+            AddClientForm acf = new AddClientForm(parentForm, db);
+            acf.setVisible(true);
         }
     }
     @Override

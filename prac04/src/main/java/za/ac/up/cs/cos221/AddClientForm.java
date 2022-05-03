@@ -13,4 +13,5 @@ public class AddClientForm extends JDialog{
         this.add(mainPnl);
         this.pack();
     }
+    
 }
