@@ -36,7 +36,7 @@ public class InventoryPanel extends JPanel implements ActionListener{
         + " GROUP BY title,Store;";
         try {
             JTable table = new JTable(db.getTableModel(query));
-            JScrollPane scrollPane = new JScrollPane(table);    
+            JScrollPane scrollPane = new JScrollPane(table);
             this.add(scrollPane);
         } catch (SQLException e) {
             throw new Error("Error: " + e.getMessage());
@@ -49,6 +49,6 @@ public class InventoryPanel extends JPanel implements ActionListener{
             JFrame parentForm = (JFrame) SwingUtilities.getWindowAncestor(this);
             MovieReport movieReport = new MovieReport(parentForm, db);
             movieReport.setVisible(true);
-        }    
+        }
     }
 }
