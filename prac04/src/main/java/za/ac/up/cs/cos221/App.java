@@ -1,9 +1,5 @@
 package za.ac.up.cs.cos221;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
-import javax.swing.UIManager;
 /**
  * Hello world!
  *
@@ -22,7 +18,6 @@ public class App
     {
         MainFrame mf = new MainFrame(setConnection());
         mf.setVisible(true);
-        // System.out.println("hello world!");
     } 
     private static Database setConnection(){
         Database db = new Database(driver,host,port, database,username,password);

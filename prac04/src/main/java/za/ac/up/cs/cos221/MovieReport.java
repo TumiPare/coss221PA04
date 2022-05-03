@@ -15,7 +15,7 @@ public class MovieReport extends JDialog{
         +     "`category`.`name` as Genre,"
         +     "CONCAT(city,',', country) as Store,"
         +     "count(title) as '#Movies'"
-        + " FROM `u21452832_sakila`.`inventory`"
+        + " FROM `inventory`"
         + " INNER JOIN film"
         + " ON film.film_id = inventory.film_id"
         + " INNER JOIN store"

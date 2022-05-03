@@ -17,7 +17,7 @@ public class StaffPanel extends JPanel {
         t1=new JTextField("search...");  
         t1.setBounds(50,100, 200,30);  
         this.add(t1);
-        String query = "SELECT first_name, last_name,address,address2,district,city,postal_code, store_id,CONCAT(city,',', country) as Store"
+        String query = "SELECT first_name as 'First Name', last_name as 'Last Name',address as 'Address',address2 as 'Address2',district as 'District',city as 'City',postal_code as 'Postal Code', CONCAT(city,',', country) as Store"
         + " FROM staff"
         + " INNER JOIN address" 
         + " ON staff.address_id = address.address_id"
