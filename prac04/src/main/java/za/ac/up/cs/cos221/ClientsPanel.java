@@ -4,20 +4,36 @@ import java.sql.SQLException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
+// import java.awt.Event;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-public class ClientsPanel extends JPanel implements ActionListener{
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+
+public class ClientsPanel extends JPanel implements ActionListener, MouseListener{
     JButton btnAddClient = new JButton("Add new client");
     private Database db;
-    
+    private JTable table;
+    private JMenuItem menuEdit = new JMenuItem("Edit Client Details");
+    private JMenuItem menuDelete = new JMenuItem("Delete");
+    JPopupMenu rightClickMenu = new JPopupMenu();
     public ClientsPanel(Database db){
         this.db = db;
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setUPRightClickMenu();
+        JLabel heading = new JLabel("List of All Clients");
+        this.add(heading);
+
         String query = "SELECT " 
     +     " CONCAT(city,',', country) as Store,"
     +     " `customer`.`first_name` as 'First Name',"
@@ -37,7 +53,8 @@ public class ClientsPanel extends JPanel implements ActionListener{
     + " INNER JOIN country "
     + " ON city.country_id = country.country_id;";
         try {
-            JTable table = new JTable(db.getTableModel(query));
+            table = new JTable(db.getTableModel(query));
+            table.addMouseListener(this);
             JScrollPane scrollPane = new JScrollPane(table);    
             this.add(scrollPane);
         } catch (SQLException e) {
@@ -46,12 +63,55 @@ public class ClientsPanel extends JPanel implements ActionListener{
         btnAddClient.addActionListener(this);
         this.add(btnAddClient);
     }
+    private void setUPRightClickMenu(){
+        menuEdit.addActionListener(this);
+        menuDelete.addActionListener(this);
+        rightClickMenu.add(menuEdit);
+        rightClickMenu.add(menuDelete);
+    }
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==btnAddClient){
             JFrame parentForm = (JFrame) SwingUtilities.getWindowAncestor(this);
             AddClientForm acf = new AddClientForm(parentForm, db);
             acf.setVisible(true);
         }    
+        else if(e.getSource()==menuDelete){
+        }
+        else if(e.getSource()==menuEdit){
+        }
     }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        
+        
+    }
+    @Override
+    public void mousePressed(MouseEvent e) {
+       
+        if(SwingUtilities.isRightMouseButton(e)){
+            Point p = e.getPoint();
+            int row = table.rowAtPoint(p);
+            table.setRowSelectionInterval(row, row);
+            rightClickMenu.show(e.getComponent(), e.getX(), e.getY());    
+        }
+   
+    }
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // rightClickMenu.setVisible(false);
+        // this.remove(rightClickMenu);
+        
+    }
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+    @Override
+    public void mouseExited(MouseEvent e) {
+       
+        // rightClickMenu.setVisible(false);
+    }
+   
     
 }
