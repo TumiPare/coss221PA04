@@ -12,8 +12,8 @@ You can specify paramaters to the program using command line arguments that you 
 You can also use the default settings but they may not work.
 Do not move the makefile.
 > Arguments are:
-> -p --password : specify a password to access the database with
-> -u --username : specify a username to access the database with
-> -d --database : specify a database name to access the database with
-> --port : specify a port to access the database with
-> example: App -p pwd2logo -u daniel -d database --port 3306
+>- -p --password : specify a password to access the database with
+>- -u --username : specify a username to access the database with
+>- -d --database : specify a database name to access the database with
+>- --port : specify a port to access the database with
+>- example: App -p pwd2logo -u daniel -d database --port 3306
