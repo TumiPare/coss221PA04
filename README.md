@@ -1,10 +1,11 @@
-#H1 Installing the database
+# Practical Assignment 4
+## Installing the database
 To install the database to a new system use the following commands in a terminal:
 ```bash
 mysql -u root -p -e "create database u21435872_upbank";
 mysql -u root -p u21435872_upbank < u21435872_upbank.sql
 ```
-#H1 Running the Program
+## Running the Program
 The easiest way to run the program is by using the makefile located at:
 > `./prac04/src/main/java/makefile`
 You can specify paramaters to the program using command line arguments that you can modify in the makefile according too your needs.
