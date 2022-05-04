@@ -7,7 +7,7 @@ public class MainFrame extends JFrame {
     public MainFrame(Database db){
         try {
             UIManager.setLookAndFeel(
-                "javax.swing.plaf.nimbus.NimbusLookAndFeel");
+             "javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

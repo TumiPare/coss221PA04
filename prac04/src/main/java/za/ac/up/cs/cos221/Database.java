@@ -11,6 +11,7 @@ import java.sql.ResultSetMetaData;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -68,8 +69,18 @@ public class Database {
             throw new Error("Error: " + e.getMessage());
         }
     }
-
-    public PreparedStatement prepareStatement(String query)
+    // public void prepareStatement(String query, Object objs[])
+    // {
+    //     try {
+    //         PreparedStatement statement = connection.prepareStatement(query);
+	// 		for(int i = 0; i< objs.length;i++){
+	// 			statement.setObject(i,objs[i]);
+	// 		}
+    //     } catch (SQLException e) {
+    //         throw new Error("Error: " + e.getMessage());
+    //     }
+    // }
+	public PreparedStatement prepareStatement(String query)
     {
         try {
             return connection.prepareStatement(query);
@@ -122,6 +133,106 @@ public class Database {
         }
         return mainPnl;
     }
+	public JPanel createForm(String [] labels, String [] fields){
+        JPanel mainPnl = new JPanel();
+        mainPnl.setLayout(new BoxLayout(mainPnl, BoxLayout.PAGE_AXIS));
+        for (int i = 0; i < labels.length; i++) {
+            JPanel pnlRow = new JPanel();
+            pnlRow.setLayout(new BoxLayout(pnlRow, BoxLayout.LINE_AXIS));
+            JLabel label = new JLabel(labels[i]);
+            JTextField textField = new JTextField(10);
+			textField.setText(fields[i]);
+            label.setPreferredSize(new Dimension(100,30));
+            pnlRow.add(label);
+            pnlRow.add(textField);
+            mainPnl.add(pnlRow);
+            label.setLabelFor(textField);
+        }
+        return mainPnl;
+    }
+	public boolean deleteClient(Object fn, Object ln, Object email, JPanel pnl){
+		try {
+			System.out.println(fn);
+			System.out.println(ln);
+			System.out.println(email);
+			int confirmation = JOptionPane.showConfirmDialog(null, 
+			"Do you want to proceed to delete "+fn+" "+ln+" ?", "Are you sure?",JOptionPane.YES_NO_CANCEL_OPTION);
+			if (confirmation == 0){
+				String queryId = "SELECT customer_id FROM customer"
+				+ " WHERE first_name = ?"
+				+ " AND last_name = ?"
+				+ " AND email = ?;";
+				PreparedStatement statement = this.prepareStatement(queryId);
+				statement.setString(1, (String) fn);
+				statement.setString(2, (String) ln);
+				statement.setString(3, (String) email);
+				System.out.println(statement);
+				ResultSet rs = statement.executeQuery();
+				int clientID = -1;
+				if(rs.next()){
+					clientID = rs.getInt(1);
+					System.out.println(clientID);
+				}				
+				if( clientID != -1){
+					deletePayment(clientID);
+					deleteRental(clientID);
+					return deleteCustomer(clientID, pnl);
+					
+				}  
+			}
+		} catch (SQLException e1) {
+			throw new Error("Error: " + e1.getMessage());
+		}
+		return false;
+	}
+	private void deleteRental(int id){
+		String queryDelete =  " DELETE FROM rental where customer_id = ? ;";
+				PreparedStatement statementDelete = prepareStatement(queryDelete); 
+				try {
+					statementDelete.setInt(1,id);
+					statementDelete.executeQuery();
+				} catch (SQLException e) {
+					throw new Error("Error: " + e.getMessage());
+			
+				}			
+	}
+	private void deletePayment(int id){
+		String queryDelete = " DELETE FROM payment where customer_id = ? ;";
+	
+		// + " DELETE FROM `customer`" 
+		// + " WHERE customer_id = ? ;";
+		PreparedStatement statementDelete = prepareStatement(queryDelete); 
+		try {
+			statementDelete.setInt(1,id);
+			statementDelete.executeQuery();
+		} catch (SQLException e) {
+			throw new Error("Error: " + e.getMessage());
+		}	
+	}
+	public boolean addClient(String[] fields ){
+		return false;
+	}
+	public boolean editClient(String[] fields ){
+		return false;
+	}
+	private boolean deleteCustomer(int id, JPanel pnl){
+		String queryDelete = " DELETE FROM customer where customer_id = ? ;";
+	
+		PreparedStatement statementDelete = prepareStatement(queryDelete); 
+		try {
+			statementDelete.setInt(1,id);
+			statementDelete.executeQuery();
+			if (statementDelete.getUpdateCount() != 0) {
+				JOptionPane.showMessageDialog(pnl, "Client deleteion succesful.", "Success",JOptionPane.PLAIN_MESSAGE);
+				return true;
+			} else {
+				JOptionPane.showMessageDialog(pnl, "Error, failed delete client.", "Warning",JOptionPane.WARNING_MESSAGE);
+				return false;
+			}
+		} catch (SQLException e) {
+			throw new Error("Error: " + e.getMessage());
+		}	
+	}
     public boolean insertFilm(String title, String desc, int release,
 	String lang, int duration, Double rate, int length, Double cost,
 	String rating, String originalLang, String[] features) {
