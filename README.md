@@ -2,8 +2,9 @@
 ## Installing the database
 To install the database to a new system use the following commands in a terminal:
 ```bash
-mysql -u root -p -e "create database u21435872_upbank";
-mysql -u root -p u21435872_upbank < u21435872_upbank.sql
+mysql -u root -p -e "create database u21435872_u21452832_sakila";
+mysql -u root -p u21435872_upbank < sakila-schema.sql
+mysql -u root -p u21435872_upbank < sakila-data.sql
 ```
 ## Running the Program
 The easiest way to run the program is by using the makefile located at:
