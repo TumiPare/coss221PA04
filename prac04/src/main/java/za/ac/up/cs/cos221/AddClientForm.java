@@ -36,6 +36,7 @@ public class AddClientForm extends JDialog implements ActionListener{
     }
     public AddClientForm(JFrame parent,Database db,String fields[]){
         super(parent,"Enter data",true);
+        this.db = db;
         add = false;
         edit = true;
     

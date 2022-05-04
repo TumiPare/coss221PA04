@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.sql.ResultSetMetaData;
 
 import javax.swing.BoxLayout;
@@ -210,9 +212,28 @@ public class Database {
 		}	
 	}
 	public boolean addClient(String[] fields ){
+		// insertAddress(fields[6], fields[7], fields[8], fields[9]);
 		return false;
 	}
 	public boolean editClient(String[] fields ){
+		return false;
+	}
+	private boolean insertAddress(String Address, String District, String Post, String tell){
+		String dateNow = DateTimeFormatter.BASIC_ISO_DATE.format(LocalDate.now());
+		String query = "INSERT INTO `address`(`address`,`address2`,`district`,`city_id`,`postal_code`,`phone`,`last_update`)"
+		+ " VALUES (?,' ',?,10,?,?,?);";
+		
+		PreparedStatement statement = this.prepareStatement(query);
+		try {
+			statement.setString(1, (String) Address);
+			statement.setString(2, (String) District);
+			statement.setString(2, (String) Post);
+			statement.setString(3, (String) tell);
+			statement.setString(4, (String) dateNow);
+		
+		} catch (SQLException e) {
+			throw new Error("Error: " + e.getMessage());
+		}
 		return false;
 	}
 	private boolean deleteCustomer(int id, JPanel pnl){
